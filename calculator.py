@@ -1,4 +1,4 @@
-# Sophia John, Spring 2023 - COP 3502C - Lab 2
+# s-m-john, Spring 2023 - COP 3502C - Lab 2
 # Simple Calculator: Build a four-function one-run calculator
 
 first_operand = float(input("Enter first operand: "))
