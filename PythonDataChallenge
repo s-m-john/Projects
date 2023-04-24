@@ -1,0 +1,162 @@
+# CFG Python for Data
+# Sophia John
+# April 19, 2023
+
+# Challenge Introduction
+
+# Imagine you work for a small company that sells products online.
+# Your manager has asked you to analyse the sales data from the past year
+# to determine which products are the best selling. You have also been asked to identify
+# any trends in customer purchasing behaviour.
+
+# Task:
+# Use Pandas to read in the sales data from the CSV file provided in the “student materials” folder
+# on Slack (sales_dataset.csv)
+# • Calculate the total sales for each product
+# • Determine the average sale price for each product category
+# • Identify the month with the highest sales and the month with the lowest sales -> December has the highest and October the lowest.
+# • Determine which customers made the most purchases and how much they spent in total
+# • Write the results of your analysis as a CSV file
+
+# Optional extras:
+# • Use Matplotlib or Seaborn to create detailed graphs of the sales data
+# • Calculate additional metrics (e.g. median sale price, standard deviation of sale prices) -> Median sale price: $89.99
+# -> Standard deviation of sale prices: $307.98
+
+# Resources: CFG MOOC Sprints: Intro to Python for Data Replays and ChatGPT.
+# In the future I wish to incorporate loops in my code
+
+
+
+
+# START
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# read in the CSV file
+sales_data = pd.read_csv('/Users/sophia/Desktop/Programming/CFG Programme/Python for Data - MOOC - 2023/Challenge/sales_dataset.csv')
+
+# view the first 5 rows of the data
+#print(sales_data.head())
+
+
+# set the option to display all rows
+pd.set_option('display.max_rows', None)
+
+# view all the rows of data
+print(sales_data)
+
+
+
+
+# • Calculate the total sales for each product
+
+
+# group the sales data by product name and calculate the total sales
+#total_sales_per_product = sales_data.groupby('Product Name')['Sale Price'].sum()
+
+# print the total sales for each product
+#print(total_sales_per_product)
+
+# calculate the total sales for each sale
+sales_data['Total Sales'] = sales_data['Sale Price'] * sales_data['Quantity Sold']
+
+# group the sales data by product name and calculate the total sales and total quantity sold
+sales_summary = sales_data.groupby('Product Name').agg({'Total Sales': 'sum', 'Quantity Sold': 'sum'})
+
+# print the sales summary for each product
+print(sales_summary)
+
+
+
+
+# • Determine the average sale price for each product category
+
+# group the sales data by product category and calculate the mean sale price for each group
+avg_price_by_category = sales_data.groupby('Category')['Sale Price'].mean()
+
+# print the average sale price for each product category
+print(avg_price_by_category)
+
+
+
+
+# • Identify the month with the highest sales and the month with the lowest sales
+
+# group the sales data by month and calculate the total sales for each month
+sales_by_month = sales_data.groupby('Month')['Sale Price'].sum()
+
+# identify the month with the highest sales and the month with the lowest sales
+month_with_highest_sales = sales_by_month.idxmax()
+month_with_lowest_sales = sales_by_month.idxmin()
+
+# print the results
+print('Month with highest sales:', month_with_highest_sales)
+print('Month with lowest sales:', month_with_lowest_sales)
+
+
+
+
+# • Determine which customers made the most purchases and how much they spent in total
+
+
+# group the sales data by customer and calculate the total amount spent by each customer
+sales_by_customer = sales_data.groupby('Customer Name')['Sale Price'].sum()
+
+# find the customers with the highest total amount spent and print the results
+top_customers = sales_by_customer.nlargest(10)
+print('Top 10 customers by total amount spent:')
+print(top_customers)
+
+
+# Check, to find a customer by name. Uncomment to run
+
+# filter the sales data for a specific customer and calculate the total amount spent
+#customer_name = 'John Smith'
+#customer_sales = sales_data[sales_data['Customer Name'] == customer_name]['Sale Price'].sum()
+
+# print the result
+#print(f"Total amount spent by {customer_name}: ${customer_sales:.2f}")
+
+
+
+
+#OPTIONAL EXTRAS
+
+# • Calculate additional metrics (e.g. median sale price, standard deviation of sale prices)
+
+
+# calculate additional metrics
+median_sale_price = sales_data['Sale Price'].median()
+std_sale_price = sales_data['Sale Price'].std()
+
+# print the results
+print(f"Median sale price: ${median_sale_price:.2f}")
+print(f"Standard deviation of sale prices: ${std_sale_price:.2f}")
+
+
+
+
+
+# • Use Matplotlib or Seaborn to create detailed graphs of the sales data
+
+# create a scatter plot of the sales data
+plt.scatter(sales_data['Quantity Sold'], sales_data['Sale Price'])
+plt.title('Sales data')
+plt.xlabel('Quantity Sold')
+plt.ylabel('Sale price')
+plt.show()
+
+
+# read in the CSV file with sales data
+sales_data = pd.read_csv('/Users/sophia/Desktop/Programming/CFG Programme/Python for Data - MOOC - 2023/Challenge/sales_dataset.csv')
+
+# create a scatter plot of the sales data using Seaborn
+sns.scatterplot(x='Quantity Sold', y='Sale Price', data=sales_data)
+plt.title('Sales data')
+plt.show()
+
+
+# END
