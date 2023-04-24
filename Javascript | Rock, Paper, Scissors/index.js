@@ -1,3 +1,7 @@
+/ April 3, 2023
+/ Online workshop: Build a Game with Javascript
+/ with Le Wagon
+
 /* --- VARIABLES --- */
   const choices = ['✊', '🤚', '✌️'];
   const player1 = document.getElementById("player-1");
